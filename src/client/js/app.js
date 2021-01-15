@@ -1,6 +1,6 @@
 /* Global Variables */
-const baseUrl = 'http://api.openweathermap.org/data/2.5/weather?zip='
-const apiKey = '&appid=c331803b5ffd1d905064a646bfd65f9b&units=metric'
+const baseUrl = 'http://api.geonames.org/searchJSON?'
+const username = '&username=norahmd'
 
 // Create a new date instance dynamically with JS
 let d = new Date();
@@ -8,33 +8,38 @@ let newDate = d.getMonth()+'.'+ d.getDate()+'.'+ d.getFullYear();
 
 const generateBtn = document.getElementById('generate')
 
+
 generateBtn.addEventListener('click', generateData)
 
 function generateData(e){
-    const zip = document.getElementById('zip').value
-    if(zip){
-        getWeatherFromApi(baseUrl, zip, apiKey)
+    const city = document.getElementById('city').value
+    const travelDate = document.getElementById('travelDate').value
+
+    if(city){
+
+
+        getPlaceFromApi(`${baseUrl}q=${city}${username}`)
         .then(function(data){
-            console.log(data.main.temp)
-            const userFeelings = document.getElementById('feelings').value
-            postDataToServer('http://localhost:8081/set-weather', {
-                temperature: data.main.temp,
-                date: newDate,
-                userFeelings: userFeelings
+            console.log(data.geonames[0].countryName)
+            postDataToServer('http://localhost:8081/set-place', {
+                place: `${city}, ${data.geonames[0].countryName}`,
+                lat: data.geonames[0].lat,
+                lng: data.geonames[0].lng,
+                travelDate: new Date(travelDate)
             })
+            .then(
+                reflectData()
+            )
         })
-        .then(
-            reflectData()
-        )
     }
 }
 
-const getWeatherFromApi = async (url, zip, key)=>{
+const getPlaceFromApi = async (url)=>{
 
-    const res = await fetch(url+zip+key)
+    const res = await fetch(url)
     try{
-        const weather = await res.json();
-        return weather;
+        const data = await res.json();
+        return data;
     }catch(error){
         console.log('error', error);
     }
@@ -60,12 +65,22 @@ const postDataToServer = async (url='', data = {})=>{
 
 const reflectData = async () => {
 
-    const request = await fetch('http://localhost:8081/get-weather');
+    const request = await fetch('http://localhost:8081/get-place');
     try{
-      const weather = await request.json();
-      document.getElementById('date').innerHTML = weather.date;
-      document.getElementById('temp').innerHTML = weather.temperature;
-      document.getElementById('content').innerHTML = weather.userFeelings;
+      const data = await request.json();
+      console.log(data.travelDate)
+      console.log(d)
+
+
+      document.getElementById('date').innerHTML = data.place;
+      document.getElementById('temp').innerHTML = data.lat;
+      document.getElementById('content').innerHTML = data.lng;
+
+      var duration = new Date(data.travelDate).getTime() - d.getTime(); // The unit is millisecond
+      var hourDiff = parseInt(duration /  (1000 * 3600 * 24))
+
+      document.getElementById('content').innerHTML = hourDiff;
+
   
     }catch(error){
       console.log("error", error);

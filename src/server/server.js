@@ -30,10 +30,12 @@ function listening(){
     console.log(`server runing on ${port}`);
 }
 
-app.get('/get-weather', function (req, res){
+app.get('/get-place', function (req, res){
     res.send(projectData);
+    console.log(projectData)
 });
 
-app.post('/set-weather', function(req, res){
+app.post('/set-place', function(req, res){
+    console.log('once')
     projectData = req.body
 });
