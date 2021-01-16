@@ -98,12 +98,10 @@ const reflectData = async () => {
       document.getElementById('temp').innerHTML = data.lat;
       document.getElementById('content').innerHTML = data.lng;
 
-      var duration = new Date(data.travelDate).getTime() - d.getTime();
-      var dayDiff = parseInt(duration /  (1000 * 3600 * 24))
-      var travelDuration = new Date(data.returnDate).getTime() - new Date(data.travelDate).getTime();
-      var travelDurationDays = parseInt(travelDuration /  (1000 * 3600 * 24))
-      console.log(travelDurationDays)
-      document.getElementById('content').innerHTML = dayDiff;
+      var daysUntilTravil = Client.calculateDurationInDays(d, data.travelDate)
+      var travelDuration = Client.calculateDurationInDays(data.travelDate, data.returnDate)
+      console.log(travelDuration)
+      document.getElementById('content').innerHTML = daysUntilTravil;
 
   
     }catch(error){
@@ -111,4 +109,4 @@ const reflectData = async () => {
     }
   }
 
-  export { generateData, generateBtn }
+  export { generateData, generateBtn}
