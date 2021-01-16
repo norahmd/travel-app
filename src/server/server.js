@@ -32,10 +32,9 @@ function listening(){
 
 app.get('/get-place', function (req, res){
     res.send(projectData);
-    console.log(projectData)
 });
 
 app.post('/set-place', function(req, res){
-    console.log('once')
     projectData = req.body
+    res.end('yes');
 });
