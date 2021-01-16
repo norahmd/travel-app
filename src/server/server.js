@@ -1,5 +1,5 @@
 // Setup empty JS object to act as endpoint for all routes
-projectData = {};
+var projectData = {};
 
 // Require Express to run server and routes
 const express = require('express');
@@ -24,7 +24,10 @@ app.use(express.static('dist'));
 // Setup Server
 const port = 8081
 
-app.listen(port, listening);
+if (process.env.NODE_ENV !== 'test') {
+    app.listen(port, listening);
+
+  }
 
 function listening(){
     console.log(`server runing on ${port}`);
@@ -36,5 +39,8 @@ app.get('/get-place', function (req, res){
 
 app.post('/set-place', function(req, res){
     projectData = req.body
+    res.statusCode = 200
     res.end('yes');
 });
+
+module.exports = app;
