@@ -100,7 +100,7 @@ const reflectData = async () => {
         var heading = document.createElement('h1')
         heading.innerHTML = `My trip to: ${data.place}<br>Departing: ${data.travelDate.slice(0, 10)}`
         var p = document.createElement('p')
-        p.innerHTML = `${data.place} is ${daysUntilTravil} days away and lasts for ${travelDuration}<br>
+        p.innerHTML = `${data.place} is ${daysUntilTravil} days away and lasts for ${travelDuration} days<br>
         <br>Typical weather for then is:<br>
         High: ${data.high_temp} Low: ${data.low_temp}<br>
         ${data.description}`

@@ -48,16 +48,20 @@
                 <button id="generate" type = "submit"> Generate </button>
             </div>
                 <div class="main-content">
-                    <!-- <section class="card">
-                        <figure>
-                            <img src="images/books-image.jpg" alt="book-image">
-                        </figure>
-                        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quidem cupiditate officia velit.</p>
-                    </section> -->
+                    
                 </div>
                 <footer>
                     <p>&copy; By Norah</p>
                 </footer>
             </div>
+            <script>
+              // Check that service workers are supported
+              if ('serviceWorker' in navigator) {
+                  // Use the window load event to keep the page load performant
+                  window.addEventListener('load', () => {
+                      navigator.serviceWorker.register('/service-worker.js');
+                  });
+              }
+          </script>
         </body>
     </html>
