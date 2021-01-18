@@ -20,8 +20,6 @@ function generateData(e){
     const travelDate = new Date(document.getElementById('travelDate').value)
     const returnDate = new Date(document.getElementById('returnDate').value)
 
-    // const dayAfter = new Date(travelDate)
-    // dayAfter.setDate(dayAfter.getDate() + 1);
     var newData 
 
     if(city&&travelDate){
@@ -41,11 +39,12 @@ function generateData(e){
         .then(function(data){
             newData['high_temp'] = data.data[0].high_temp
             newData['low_temp'] = data.data[0].low_temp
+            newData['description'] = data.data[0].weather.description
+
         })
         .then(() => getInfoFromApi(`${pixaBayUrl}key=${pixaBayKey}&q=${encodeURIComponent(city)}`))
         .then(function(data){
             newData['photo_url'] = data.hits[0].largeImageURL
-            console.log(newData)
         })
         .then(() => postDataToServer('http://localhost:8081/set-place', newData) )
             .then(()=>reflectData())
@@ -54,11 +53,10 @@ function generateData(e){
 
 
 const getInfoFromApi = async (url)=>{
-    console.log('function 1 get data from api')
+    // this function is used to bring data from a given api url
     const res = await fetch(url)
     try{
         const data = await res.json();
-        console.log(data)
         return data;
     }catch(error){
         console.log('error', error);
@@ -66,7 +64,6 @@ const getInfoFromApi = async (url)=>{
 }
 
 const postDataToServer = async (url='', data = {})=>{
-    console.log('function 2 set data to server')
 
     const res = await fetch(url, {
         method: 'POST',
@@ -85,23 +82,29 @@ const postDataToServer = async (url='', data = {})=>{
 }
 
 const reflectData = async () => {
-    console.log('function 3 reflect changes')
-
+// this function is used to bring data from the server then reflect the data on the website
     const request = await fetch('http://localhost:8081/get-place');
     try{
       const data = await request.json();
-      console.log(data.travelDate)
-      console.log(d)
-
-
-      document.getElementById('date').innerHTML = data.place;
-      document.getElementById('temp').innerHTML = data.lat;
-      document.getElementById('content').innerHTML = data.lng;
-
       var daysUntilTravil = Client.calculateDurationInDays(d, data.travelDate)
       var travelDuration = Client.calculateDurationInDays(data.travelDate, data.returnDate)
-      console.log(travelDuration)
-      document.getElementById('content').innerHTML = daysUntilTravil;
+        var div = document.getElementsByClassName('main-content')[0]
+        var section = document.createElement('section')
+        section.classList = 'card'
+        var figure = document.createElement('figure')
+        var img = document.createElement('img')
+        img.src = data.photo_url
+        figure.append(img)
+        section.append(figure)
+        div.prepend(section)
+        var heading = document.createElement('h1')
+        heading.innerHTML = `My trip to: ${data.place}<br>Departing: ${data.travelDate.slice(0, 10)}`
+        var p = document.createElement('p')
+        p.innerHTML = `${data.place} is ${daysUntilTravil} days away and lasts for ${travelDuration}<br>
+        <br>Typical weather for then is:<br>
+        High: ${data.high_temp} Low: ${data.low_temp}<br>
+        ${data.description}`
+        section.append(heading, p)
 
   
     }catch(error){

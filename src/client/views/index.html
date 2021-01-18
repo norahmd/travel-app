@@ -1,38 +1,63 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Weather Journal</title>
-<link href="https://fonts.googleapis.com/css?family=Oswald:400,600,700|Ranga:400,700&display=swap" rel="stylesheet">
-</head>
- <body>
-<div id = "app">
-  <div class ="holder headline">
-    Weather Journal App
-  </div>
-  <div class ="holder zip">
-    <label for="zip">Enter City here</label>
-    <input type="text" id="city" placeholder="enter city name here">
-    <input type="text" id="travelDate" placeholder="Departing Date">
-    <input type="text" id="returnDate" placeholder="Returning Date">
+    <html>
+        <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Travel App</title>
+        </head>
+        <body>
+            <div class="container">
+                <header>
+                  <h1>Travel App</h1>
+                </header>
+                <!-- <div class="fields">
+                  <div class="city-name">
+                  <label for="city">Enter City name</label>
+                  <input type="text" id="city" placeholder="enter city name here">
+                </div>
+                <div class="dates">
+                  <label for="travelDate">Enter departing date</label>
+                  <input type="text" id="travelDate" placeholder="Departing Date">
 
-
-  </div>
-<div></div>
-  <div class ="holder feel">
-    <label for="feelings">How are you feeling today?</label>
-    <textarea class= "myInput" id="feelings" placeholder="Enter your feelings here" rows="9" cols="50"></textarea>
-    <button id="generate" type = "submit"> Generate </button>
-  </div>
-  <div class ="holder entry">
-    <div class = "title">Most Recent Entry</div>
-   <div id = "entryHolder">
-    <div id = "date"></div> 
-   <div id = "temp"></div>
-   <div id = "content"></div>
-  </div>
-  </div>
-  </div>
-
-</body>
-</html>
+                  <label for="returnDate">Enter returning date</label>
+                  <input type="text" id="returnDate" placeholder="Returning Date">
+                </div>
+              </div> -->
+              <div class="fields">
+    
+                <div class="group">      
+                  <input type="text" id="city" required>
+                  <span class="highlight"></span>
+                  <span class="bar"></span>
+                  <label>City</label>
+                </div>
+                  
+                <div class="group">      
+                  <input type="text" id="travelDate" required>
+                  <span class="highlight"></span>
+                  <span class="bar"></span>
+                  <label>Departing date</label>
+                </div>
+                  
+                <div class="group">      
+                  <input type="text" id="returnDate" required>
+                  <span class="highlight"></span>
+                  <span class="bar"></span>
+                  <label>Returning date</label>
+                </div>
+                <button id="generate" type = "submit"> Generate </button>
+            </div>
+                <div class="main-content">
+                    <!-- <section class="card">
+                        <figure>
+                            <img src="images/books-image.jpg" alt="book-image">
+                        </figure>
+                        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quidem cupiditate officia velit.</p>
+                    </section> -->
+                </div>
+                <footer>
+                    <p>&copy; By Norah</p>
+                </footer>
+            </div>
+        </body>
+    </html>
