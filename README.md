@@ -1,12 +1,12 @@
 
-# NPL
-This is a simple app for natural language processing.
+# Travel app
+This is a simple app for plannig trips to any city in the world.
 
 ## Installation
 
 
 ```
-git clone https://github.com/norahmd/NLP.git
+git clone https://github.com/norahmd/travel-app.git
 ```
 
 `cd` into your new folder and run:
