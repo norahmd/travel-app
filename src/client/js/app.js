@@ -11,6 +11,7 @@ let d = new Date();
 let newDate = d.getMonth()+'.'+ d.getDate()+'.'+ d.getFullYear();
 
 const generateBtn = document.getElementById('generate')
+const body = document.getElementsByTagName('body')[0]
 
 
 generateBtn.addEventListener('click', generateData)
@@ -23,7 +24,7 @@ function generateData(e){
     var newData 
 
     if(city&&travelDate){
-
+        body.classList.add('loading')
         getInfoFromApi(`${baseUrl}q=${city}${username}`)
         .then(function(data){
             newData = {
@@ -105,7 +106,7 @@ const reflectData = async () => {
         High: ${data.high_temp} Low: ${data.low_temp}<br>
         ${data.description}`
         section.append(heading, p)
-
+        body.classList.remove('loading')
   
     }catch(error){
       console.log("error", error);
